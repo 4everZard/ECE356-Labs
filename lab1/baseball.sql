@@ -9,7 +9,7 @@ SELECT
     FROM Master INNER JOINHallOfFame ON Master.playerID = HallOfFame.playerID
     WHERE deathYear=0 AND deathMonth=0 AND deathDay=0) - 
     (SELECT COUNT(*)
-    FROM Master INNER JOINHallOfFame on Master.playerID = HallOfFame.playerID
+    FROM Master INNER JOINHallOfFame ON Master.playerID = HallOfFame.playerID
     WHERE deathYear!=0 AND deathMonth!=0 AND deathDay!=0)
     AS Diff;
 
@@ -20,23 +20,23 @@ SELECT nameFirst, nameLast
 
 -- 1.d)
 SELECT AVG(sumHR)
-    FROM (SELECT SUM(HR) as sumHR FROM Batting group by playerID) AS t;
+    FROM (SELECT SUM(HR) AS sumHR FROM Batting GROUP BY playerID) AS t;
 
 -- 1.e)
 SELECT AVG(sumHR) 
-    FROM (SELECT SUM(HR) as sumHR FROM Batting group by playerID) AS t
+    FROM (SELECT SUM(HR) AS sumHR FROM Batting GROUP BY playerID) AS t
     WHERE t.sumHR != 0;
 
 -- 1.f)
 SELECT COUNT(playerID)
     FROM
     (SELECT playerID
-        FROM (SELECT playerID, SUM(HR) as sumHR FROM Batting group by playerID) AS t
-        WHERE sumHR > (SELECT AVG(sumHR) FROM (SELECT SUM(HR) as sumHR FROM Batting group by playerID) AS t1)) AS t2
+        FROM (SELECT playerID, SUM(HR) AS sumHR FROM Batting GROUP BY playerID) AS t
+        WHERE sumHR > (SELECT AVG(sumHR) FROM (SELECT SUM(HR) AS sumHR FROM Batting GROUP BY playerID) AS t1)) AS t2
     WHERE playerID IN
     (SELECT playerID
-        FROM (SELECT playerID, SUM(SHO) as sumSHO FROM Pitching group by playerID) AS t
-        WHERE sumSHO > (SELECT AVG(sumSHO) FROM (SELECT SUM(SHO) as sumSHO FROM Pitching group by playerID) AS t1));
+        FROM (SELECT playerID, SUM(SHO) AS sumSHO FROM Pitching GROUP BY playerID) AS t
+        WHERE sumSHO > (SELECT AVG(sumSHO) FROM (SELECT SUM(SHO) AS sumSHO FROM Pitching GROUP BY playerID) AS t1));
 
 -- 2)
 LOAD DATA LOCAL INFILE 'Fielding.csv'
