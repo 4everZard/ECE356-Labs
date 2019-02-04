@@ -38,4 +38,11 @@ SELECT COUNT(playerID)
         FROM (SELECT playerID, SUM(SHO) as sumSHO from Pitching group by playerID) AS t
         WHERE sumSHO > (SELECT AVG(sumSHO) FROM (SELECT SUM(SHO) as sumSHO from Pitching group by playerID) AS t1));
 
--- 2
+-- 2)
+LOAD DATA LOCAL INFILE 'Fielding.csv'
+    INTO TABLE Fielding
+    FIELDS TERMINATED BY ',' 
+    ENCLOSED BY '"' 
+    LINES TERMINATED BY '\r\n'
+    IGNORE 1 LINES
+    (playerID, yearID, stint, teamID, lgID, POS, G, GS, InnOuts, PO, A, E, DP, PB, WP, SB, CS, ZR);
