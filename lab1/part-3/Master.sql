@@ -1,0 +1,1 @@
+alter table master add primary key (playerID)

@@ -1,0 +1,1 @@
+alter table parks add primary key (`park.key`);

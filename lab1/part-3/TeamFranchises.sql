@@ -1,0 +1,1 @@
+alter table teamsfranchises add primary key(franchID);
