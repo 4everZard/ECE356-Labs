@@ -1,26 +1,25 @@
--- a)
--- Victor
-select user_id, name from user where review_count = (select max(review_count) from user);
+-- Part 2
+-- a = Victor
+SELECT name, user_id FROM user WHERE review_count = (SELECT max(review_count) FROM user);
 
--- b)
--- Mon ami Gabi
-select business_id, name from business where review_count = (select max(review_count) from business);
+-- b = Mon ami Gabi
+SELECT name, business_id  FROM business WHERE review_count = (SELECT max(review_count) FROM business);
 
--- c)
--- 24.3193
-select avg(review_count) from user;
+-- c = 24.3193
+SELECT avg(review_count) FROM user;
 
--- d)
--- 66
-select COUNT(*) from review join user on review.user_id = user.user_id
-left join (select review.user_id as average_user_id, avg(review.stars) as average_reviews from review join user on review.user_id = user.user_id group by review.user_id) as averages
-on review.user_id = averages.average_user_id
-where ABS(user.average_stars - averages.average_reviews) > 0.5;
+-- d = 66
+SELECT count(*) FROM user LEFT JOIN 
+(SELECT user_id, avg(stars) as average_stars FROM review GROUP BY user_id) AS average_review 
+ON average_review.user_id = user.user_id 
+WHERE ABS(user.average_stars - average_review.avg_str) > 0.5;
 
--- e)
--- 0.3311
-select (select count(*) from user where review_count > 10) / (select count(*) from user);
 
--- f)
--- 698.7808
-select avg(length(text)) from review where user_id in (select user_id from user where review_count > 10);
+-- e = 0.3311
+SELECT
+(SELECT count(*) FROM user WHERE review_count > 10) / 
+(SELECT count(*) FROM user);
+
+-- f = 698.7808
+ SELECT avg(length(text)) FROM review WHERE user_id IN 
+ (SELECT user_id FROM user WHERE review_count > 10);
